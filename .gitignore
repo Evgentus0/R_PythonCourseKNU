@@ -321,3 +321,7 @@ po/*~
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/r,python,pycharm,visualstudiocode
+
+# Data
+
+lab5/specdata/
