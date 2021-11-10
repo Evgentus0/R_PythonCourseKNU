@@ -26,7 +26,7 @@ pmean <- function(directory, pollutant, id=1:332){
   return(mean(combine_vector))
 }
 
-complete <- function(directory, id){
+complete <- function(directory, id=1:332){
   result <- data.frame(matrix(ncol = 2, nrow = 0))
   
   for(file_id in id){
@@ -42,4 +42,26 @@ complete <- function(directory, id){
   
   return(result)
 }
+
+
+corr <- function(directory, treshhold=0){
+  sulfates <- vector()
+  nitrates <- vector()
+  
+  result <- vector()
+  
+  for(file_id in 1:332){
+    if(complete(directory, file_id)[[2]][1] > treshhold){
+      read_data <- read_file(directory, file_id)
+      filled_row <- read_data[!is.na(read_data$Date) & !is.na(read_data$sulfate) & !is.na(read_data$nitrate),]
+      sulfates <- filled_row$sulfate
+      nitrates <- filled_row$nitrate
+      
+      result <- c(result, cor(sulfates, nitrates))
+    }
+  }
+  
+  return(result)
+}
+
 
